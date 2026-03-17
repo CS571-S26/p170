@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter, Route, Routes } from 'react-router';
 
 function App() {
-    <BrowserRouter basename="/p170/">
+    <HashRouter>
         <Routes>
             {/* TODO: add routes */}
         </Routes>
-    </BrowserRouter>
+    </HashRouter>
 }
 
 export default App;
