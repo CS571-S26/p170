@@ -7,6 +7,7 @@ const resources = [
         title: 'Analog VLSI and Neural Systems',
         author: 'Carver Mead',
         category: 'Book',
+        url: 'https://doi.org/10.1007/978-1-4613-1639-8',
         description:
             'The foundational text on neuromorphic engineering, covering analog circuit design inspired by biological neural systems.',
     },
@@ -15,6 +16,7 @@ const resources = [
         title: 'Loihi: A Neuromorphic Manycore Processor',
         author: 'Davies et al.',
         category: 'Paper',
+        url: 'https://doi.org/10.1109/MM.2018.112130359',
         description:
             'Intel\'s introduction of the Loihi chip, a key reference for understanding modern neuromorphic hardware.',
     },
@@ -23,6 +25,7 @@ const resources = [
         title: 'Spiking Neural Networks: An Introduction',
         author: 'Various',
         category: 'Tutorial',
+        url: 'https://snntorch.readthedocs.io/en/latest/tutorials/tutorial_1.html',
         description:
             'A beginner-friendly overview of spiking neural networks, covering neuron models, encoding schemes, and learning rules.',
     },
@@ -31,6 +34,7 @@ const resources = [
         title: 'Nengo: Neural Engineering Framework',
         author: 'Applied Brain Research',
         category: 'Tool',
+        url: 'https://www.nengo.ai/',
         description:
             'An open-source Python package for building and simulating large-scale brain models on neuromorphic hardware.',
     },
@@ -39,6 +43,7 @@ const resources = [
         title: 'STDP and Its Variants',
         author: 'Bi & Poo',
         category: 'Paper',
+        url: 'https://doi.org/10.1523/JNEUROSCI.18-24-10464.1998',
         description:
             'A review of spike-timing-dependent plasticity, the biological learning rule central to many neuromorphic systems.',
     },
@@ -47,6 +52,7 @@ const resources = [
         title: 'TrueNorth: Design and Tool Flow',
         author: 'Merolla et al.',
         category: 'Paper',
+        url: 'https://doi.org/10.1126/science.1254642',
         description:
             'IBM\'s one-million-neuron chip architecture and the programming paradigm behind it.',
     },
@@ -113,7 +119,11 @@ function ResourcesPage() {
                                         {bookmarks.includes(resource.id) ? '\u2605' : '\u2606'}
                                     </Button>
                                 </div>
-                                <Card.Title className="fs-6">{resource.title}</Card.Title>
+                                <Card.Title className="fs-6">
+                                    <a href={resource.url} target="_blank" rel="noopener noreferrer">
+                                        {resource.title}
+                                    </a>
+                                </Card.Title>
                                 <Card.Subtitle className="mb-2 text-muted" style={{ fontSize: '0.85rem' }}>
                                     {resource.author}
                                 </Card.Subtitle>
