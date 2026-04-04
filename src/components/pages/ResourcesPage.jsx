@@ -85,7 +85,13 @@ function ResourcesPage() {
             </p>
 
             <Row xs={1} md={2} lg={3} className="g-4">
-                {resources.map((resource) => (
+                {[...resources].sort((a, b) => {
+                    const aStarred = bookmarks.includes(a.id);
+                    const bStarred = bookmarks.includes(b.id);
+                    if (aStarred && !bStarred) return -1;
+                    if (!aStarred && bStarred) return 1;
+                    return 0;
+                }).map((resource) => (
                     <Col key={resource.id}>
                         <Card className="h-100">
                             <Card.Body className="d-flex flex-column">

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, ButtonGroup, Button } from 'react-bootstrap';
 import ProjectCard from '../common/ProjectCard';
 
 const projects = [
@@ -34,6 +34,7 @@ const projects = [
 ];
 
 function ProjectsPage() {
+    const [showBookmarked, setShowBookmarked] = useState(false);
     const [bookmarks, setBookmarks] = useState(() => {
         const saved = sessionStorage.getItem('wnc-bookmarks');
         return saved ? JSON.parse(saved) : [];
@@ -52,14 +53,29 @@ function ProjectsPage() {
     return (
         <Container className="py-5 text-start">
             <h1>Projects</h1>
-            <p className="lead mb-4">
+            <p className="lead mb-3">
                 Our members collaborate on hands-on projects that span neuron modeling,
                 generative AI, and neuromorphic hardware. Bookmark any project to save
                 it for this session.
             </p>
 
+            <ButtonGroup className="mb-4">
+                <Button
+                    variant={showBookmarked ? 'outline-dark' : 'dark'}
+                    onClick={() => setShowBookmarked(false)}
+                >
+                    All Projects
+                </Button>
+                <Button
+                    variant={showBookmarked ? 'dark' : 'outline-dark'}
+                    onClick={() => setShowBookmarked(true)}
+                >
+                    Bookmarked ({bookmarks.length})
+                </Button>
+            </ButtonGroup>
+
             <Row xs={1} md={2} className="g-4">
-                {projects.map((project) => (
+                {projects.filter((p) => !showBookmarked || bookmarks.includes(p.id)).map((project) => (
                     <Col key={project.id}>
                         <ProjectCard
                             project={project}
