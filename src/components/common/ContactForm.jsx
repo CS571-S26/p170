@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 
-const CONTACT_EMAIL = 'wnc-neuroai@wisc.edu';
+const CONTACT_EMAIL = 'amahoney6@wisc.edu';
 const emptyForm = { name: '', email: '', interest: 'projects', message: '' };
 
 const interestLabel = {
@@ -18,10 +18,12 @@ function ContactForm() {
 
     const messageTooShort = form.message.trim().length < 10;
 
+    const emailMissingWisc = !form.email.toLowerCase().includes('wisc');
+
     function handleSubmit(e) {
         e.preventDefault();
         const nativeValid = e.currentTarget.checkValidity();
-        if (!nativeValid || messageTooShort) {
+        if (!nativeValid || messageTooShort || emailMissingWisc) {
             setValidated(true);
             return;
         }
@@ -86,10 +88,11 @@ function ContactForm() {
                             type="email"
                             value={form.email}
                             onChange={update('email')}
+                            isInvalid={validated && emailMissingWisc}
                             placeholder="you@wisc.edu"
                         />
                         <Form.Control.Feedback type="invalid">
-                            Please enter a valid email address.
+                            Please enter a valid email address containing "wisc".
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
