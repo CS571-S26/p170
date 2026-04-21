@@ -76,14 +76,14 @@ const categoryColor = {
 
 function ResourcesPage() {
     const [bookmarks, setBookmarks] = useState(() => {
-        const saved = sessionStorage.getItem('wnc-resource-bookmarks');
+        const saved = localStorage.getItem('wnc-resource-bookmarks');
         return saved ? JSON.parse(saved) : [];
     });
     const [query, setQuery] = useState('');
     const [category, setCategory] = useState('All');
 
     useEffect(() => {
-        sessionStorage.setItem('wnc-resource-bookmarks', JSON.stringify(bookmarks));
+        localStorage.setItem('wnc-resource-bookmarks', JSON.stringify(bookmarks));
     }, [bookmarks]);
 
     function toggleBookmark(id) {
@@ -123,18 +123,20 @@ function ResourcesPage() {
             <p className="lead mb-4">
                 A curated collection of books, papers, tutorials, and tools to help you
                 get started with neuromorphic computing and NeuroAI. Search, filter, and
-                star items to pin them to the top for this session.
+                star items to pin them to the top across your visits.
             </p>
 
             <Row className="g-3 mb-4">
                 <Col md={7}>
                     <InputGroup>
-                        <InputGroup.Text>Search</InputGroup.Text>
+                        <InputGroup.Text id="resource-search-label">Search</InputGroup.Text>
                         <Form.Control
                             type="search"
                             placeholder="title, author, or keyword..."
                             value={query}
                             onChange={(e) => setQuery(e.target.value)}
+                            aria-label="Search resources"
+                            aria-describedby="resource-search-label"
                         />
                         {query && (
                             <Button variant="outline-secondary" onClick={() => setQuery('')}>

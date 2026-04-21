@@ -8,14 +8,16 @@ function ContactForm() {
     const [form, setForm] = useState(emptyForm);
     const [submittedName, setSubmittedName] = useState(null);
 
+    const messageTooShort = form.message.trim().length < 10;
+
     function handleSubmit(e) {
         e.preventDefault();
-        const valid = e.currentTarget.checkValidity();
-        if (!valid) {
+        const nativeValid = e.currentTarget.checkValidity();
+        if (!nativeValid || messageTooShort) {
             setValidated(true);
             return;
         }
-        setSubmittedName(form.name);
+        setSubmittedName(form.name.trim());
         setForm(emptyForm);
         setValidated(false);
     }
@@ -88,13 +90,13 @@ function ContactForm() {
                     required
                     as="textarea"
                     rows={4}
-                    minLength={10}
                     value={form.message}
                     onChange={update('message')}
+                    isInvalid={validated && messageTooShort}
                     placeholder="Tell us a bit about yourself and what you'd like to explore..."
                 />
                 <Form.Control.Feedback type="invalid">
-                    Tell us a bit about yourself (at least 10 characters).
+                    Please enter at least 10 non-whitespace characters.
                 </Form.Control.Feedback>
             </Form.Group>
 

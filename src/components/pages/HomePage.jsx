@@ -53,6 +53,7 @@ function HomePage() {
                     <Button
                         as={Link}
                         to="/mission"
+                        state={{ scrollTo: 'contact' }}
                         variant="danger"
                         size="lg"
                         className="me-3"

@@ -36,12 +36,12 @@ const events = [
 
 function EventsPage() {
     const [rsvps, setRsvps] = useState(() => {
-        const saved = sessionStorage.getItem('wnc-rsvps');
+        const saved = localStorage.getItem('wnc-rsvps');
         return saved ? JSON.parse(saved) : [];
     });
 
     useEffect(() => {
-        sessionStorage.setItem('wnc-rsvps', JSON.stringify(rsvps));
+        localStorage.setItem('wnc-rsvps', JSON.stringify(rsvps));
     }, [rsvps]);
 
     function toggleRsvp(key) {
@@ -55,7 +55,7 @@ function EventsPage() {
             <h1>Events</h1>
             <p className="lead mb-4">
                 We meet regularly throughout the academic year. RSVP to any events
-                you'd like to attend and we'll keep track for this session.
+                you'd like to attend and we'll keep track across your visits.
             </p>
 
             <p className="mb-3">

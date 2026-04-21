@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import ContactForm from '../common/ContactForm';
 
@@ -21,6 +23,15 @@ const values = [
 ];
 
 function MissionPage() {
+    const location = useLocation();
+    const contactRef = useRef(null);
+
+    useEffect(() => {
+        if (location.state?.scrollTo === 'contact' && contactRef.current) {
+            contactRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, [location]);
+
     return (
         <Container className="py-5 text-start">
             <h1>Mission &amp; Values</h1>
@@ -59,7 +70,7 @@ function MissionPage() {
                 </Row>
             </section>
 
-            <section>
+            <section ref={contactRef} id="contact" style={{ scrollMarginTop: '80px' }}>
                 <h2 className="mb-3">Get in Touch</h2>
                 <p className="mb-4">
                     Interested in joining, collaborating, or just learning more? Drop us

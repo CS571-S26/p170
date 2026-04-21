@@ -45,12 +45,12 @@ function ProjectsPage() {
     const [showBookmarked, setShowBookmarked] = useState(false);
     const [selectedTag, setSelectedTag] = useState('All');
     const [bookmarks, setBookmarks] = useState(() => {
-        const saved = sessionStorage.getItem('wnc-bookmarks');
+        const saved = localStorage.getItem('wnc-bookmarks');
         return saved ? JSON.parse(saved) : [];
     });
 
     useEffect(() => {
-        sessionStorage.setItem('wnc-bookmarks', JSON.stringify(bookmarks));
+        localStorage.setItem('wnc-bookmarks', JSON.stringify(bookmarks));
     }, [bookmarks]);
 
     function toggleBookmark(id) {
@@ -76,7 +76,7 @@ function ProjectsPage() {
             <p className="lead mb-4">
                 Our members collaborate on hands-on projects that span neuron modeling,
                 generative AI, and neuromorphic hardware. Filter by tag, bookmark your
-                favorites, and expand a card for more detail.
+                favorites (saved across visits), and expand a card for more detail.
             </p>
 
             <div className="d-flex flex-wrap gap-3 align-items-center mb-4">
