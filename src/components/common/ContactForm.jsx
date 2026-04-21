@@ -18,15 +18,15 @@ function ContactForm() {
 
     const messageTooShort = form.message.trim().length < 10;
 
-    const emailMissingWisc = !form.email.toLowerCase().includes('wisc.edu');
-
     function handleSubmit(e) {
         e.preventDefault();
+
         const nativeValid = e.currentTarget.checkValidity();
-        if (!nativeValid || messageTooShort || emailMissingWisc) {
+        if (!nativeValid || messageTooShort) {
             setValidated(true);
             return;
         }
+
         const name = form.name.trim();
         const email = form.email.trim();
         const message = form.message.trim();
@@ -39,6 +39,7 @@ function ContactForm() {
         window.location.href =
             `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}` +
             `&body=${encodeURIComponent(body)}`;
+        
         setSubmittedName(name);
         setForm(emptyForm);
         setValidated(false);
@@ -88,7 +89,7 @@ function ContactForm() {
                             type="email"
                             value={form.email}
                             onChange={update('email')}
-                            isInvalid={validated && emailMissingWisc}
+                            pattern=".*@[wW][iI][sS][cC]\.[eE][dD][uU]"
                             placeholder="you@wisc.edu"
                         />
                         <Form.Control.Feedback type="invalid">
