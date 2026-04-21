@@ -1,4 +1,5 @@
-import { Container, Table } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Container, Table, Button, Badge } from 'react-bootstrap';
 
 const events = [
     {
@@ -34,12 +35,34 @@ const events = [
 ];
 
 function EventsPage() {
+    const [rsvps, setRsvps] = useState(() => {
+        const saved = sessionStorage.getItem('wnc-rsvps');
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        sessionStorage.setItem('wnc-rsvps', JSON.stringify(rsvps));
+    }, [rsvps]);
+
+    function toggleRsvp(key) {
+        setRsvps((prev) =>
+            prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key]
+        );
+    }
+
     return (
         <Container className="py-5 text-start">
             <h1>Events</h1>
             <p className="lead mb-4">
-                We meet regularly throughout the academic year. Here is a look at our
-                past and upcoming events.
+                We meet regularly throughout the academic year. RSVP to any events
+                you'd like to attend and we'll keep track for this session.
+            </p>
+
+            <p className="mb-3">
+                <Badge bg="danger" className="me-2">
+                    {rsvps.length}
+                </Badge>
+                event{rsvps.length === 1 ? '' : 's'} on your list
             </p>
 
             <Table striped hover responsive>
@@ -48,16 +71,30 @@ function EventsPage() {
                         <th>Date</th>
                         <th>Event</th>
                         <th>Description</th>
+                        <th className="text-end">RSVP</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {events.map((event) => (
-                        <tr key={event.date + event.title}>
-                            <td className="text-nowrap">{event.date}</td>
-                            <td className="fw-semibold">{event.title}</td>
-                            <td>{event.description}</td>
-                        </tr>
-                    ))}
+                    {events.map((event) => {
+                        const key = event.date + event.title;
+                        const going = rsvps.includes(key);
+                        return (
+                            <tr key={key} className={going ? 'table-active' : ''}>
+                                <td className="text-nowrap">{event.date}</td>
+                                <td className="fw-semibold">{event.title}</td>
+                                <td>{event.description}</td>
+                                <td className="text-end">
+                                    <Button
+                                        size="sm"
+                                        variant={going ? 'danger' : 'outline-danger'}
+                                        onClick={() => toggleRsvp(key)}
+                                    >
+                                        {going ? '\u2713 Going' : 'RSVP'}
+                                    </Button>
+                                </td>
+                            </tr>
+                        );
+                    })}
                 </tbody>
             </Table>
         </Container>

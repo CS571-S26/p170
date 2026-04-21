@@ -1,5 +1,14 @@
-import { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Button } from 'react-bootstrap';
+import { useState, useEffect, useMemo } from 'react';
+import {
+    Container,
+    Row,
+    Col,
+    Card,
+    Badge,
+    Button,
+    Form,
+    InputGroup,
+} from 'react-bootstrap';
 
 const resources = [
     {
@@ -58,11 +67,20 @@ const resources = [
     },
 ];
 
+const categoryColor = {
+    Book: 'primary',
+    Paper: 'success',
+    Tutorial: 'info',
+    Tool: 'warning',
+};
+
 function ResourcesPage() {
     const [bookmarks, setBookmarks] = useState(() => {
         const saved = sessionStorage.getItem('wnc-resource-bookmarks');
         return saved ? JSON.parse(saved) : [];
     });
+    const [query, setQuery] = useState('');
+    const [category, setCategory] = useState('All');
 
     useEffect(() => {
         sessionStorage.setItem('wnc-resource-bookmarks', JSON.stringify(bookmarks));
@@ -74,67 +92,129 @@ function ResourcesPage() {
         );
     }
 
-    const categoryColor = {
-        Book: 'primary',
-        Paper: 'success',
-        Tutorial: 'info',
-        Tool: 'warning',
-    };
+    const categories = useMemo(
+        () => ['All', ...new Set(resources.map((r) => r.category))],
+        []
+    );
+
+    const visible = useMemo(() => {
+        const q = query.trim().toLowerCase();
+        const filtered = resources.filter((r) => {
+            const matchesCategory = category === 'All' || r.category === category;
+            const matchesQuery =
+                !q ||
+                r.title.toLowerCase().includes(q) ||
+                r.author.toLowerCase().includes(q) ||
+                r.description.toLowerCase().includes(q);
+            return matchesCategory && matchesQuery;
+        });
+        return filtered.sort((a, b) => {
+            const aStar = bookmarks.includes(a.id);
+            const bStar = bookmarks.includes(b.id);
+            if (aStar && !bStar) return -1;
+            if (!aStar && bStar) return 1;
+            return 0;
+        });
+    }, [query, category, bookmarks]);
 
     return (
         <Container className="py-5 text-start">
             <h1>Resource Library</h1>
             <p className="lead mb-4">
                 A curated collection of books, papers, tutorials, and tools to help you
-                get started with neuromorphic computing and NeuroAI. Bookmark items to
-                save them for this session.
+                get started with neuromorphic computing and NeuroAI. Search, filter, and
+                star items to pin them to the top for this session.
             </p>
 
-            <Row xs={1} md={2} lg={3} className="g-4">
-                {[...resources].sort((a, b) => {
-                    const aStarred = bookmarks.includes(a.id);
-                    const bStarred = bookmarks.includes(b.id);
-                    if (aStarred && !bStarred) return -1;
-                    if (!aStarred && bStarred) return 1;
-                    return 0;
-                }).map((resource) => (
-                    <Col key={resource.id}>
-                        <Card className="h-100">
-                            <Card.Body className="d-flex flex-column">
-                                <div className="d-flex justify-content-between align-items-start mb-2">
-                                    <Badge bg={categoryColor[resource.category]}>
-                                        {resource.category}
-                                    </Badge>
-                                    <Button
-                                        variant="link"
-                                        size="sm"
-                                        className="p-0 text-decoration-none"
-                                        onClick={() => toggleBookmark(resource.id)}
-                                        aria-label={
-                                            bookmarks.includes(resource.id)
-                                                ? `Remove bookmark for ${resource.title}`
-                                                : `Bookmark ${resource.title}`
-                                        }
-                                    >
-                                        {bookmarks.includes(resource.id) ? '\u2605' : '\u2606'}
-                                    </Button>
-                                </div>
-                                <Card.Title className="fs-6">
-                                    <a href={resource.url} target="_blank" rel="noopener noreferrer">
-                                        {resource.title}
-                                    </a>
-                                </Card.Title>
-                                <Card.Subtitle className="mb-2 text-muted" style={{ fontSize: '0.85rem' }}>
-                                    {resource.author}
-                                </Card.Subtitle>
-                                <Card.Text style={{ fontSize: '0.9rem' }}>
-                                    {resource.description}
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                ))}
+            <Row className="g-3 mb-4">
+                <Col md={7}>
+                    <InputGroup>
+                        <InputGroup.Text>Search</InputGroup.Text>
+                        <Form.Control
+                            type="search"
+                            placeholder="title, author, or keyword..."
+                            value={query}
+                            onChange={(e) => setQuery(e.target.value)}
+                        />
+                        {query && (
+                            <Button variant="outline-secondary" onClick={() => setQuery('')}>
+                                Clear
+                            </Button>
+                        )}
+                    </InputGroup>
+                </Col>
+                <Col md={5}>
+                    <Form.Select
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        aria-label="Filter resources by category"
+                    >
+                        {categories.map((c) => (
+                            <option key={c} value={c}>
+                                {c === 'All' ? 'All categories' : c}
+                            </option>
+                        ))}
+                    </Form.Select>
+                </Col>
             </Row>
+
+            <p className="text-muted small mb-3">
+                Showing {visible.length} of {resources.length} resources
+                {bookmarks.length > 0 && ` \u00b7 ${bookmarks.length} starred`}
+            </p>
+
+            {visible.length === 0 ? (
+                <p className="text-muted fst-italic">
+                    No resources match your search. Try a different keyword or category.
+                </p>
+            ) : (
+                <Row xs={1} md={2} lg={3} className="g-4">
+                    {visible.map((resource) => (
+                        <Col key={resource.id}>
+                            <Card className="h-100">
+                                <Card.Body className="d-flex flex-column">
+                                    <div className="d-flex justify-content-between align-items-start mb-2">
+                                        <Badge bg={categoryColor[resource.category]}>
+                                            {resource.category}
+                                        </Badge>
+                                        <Button
+                                            variant="link"
+                                            size="sm"
+                                            className="p-0 text-decoration-none star-button"
+                                            onClick={() => toggleBookmark(resource.id)}
+                                            aria-label={
+                                                bookmarks.includes(resource.id)
+                                                    ? `Remove bookmark for ${resource.title}`
+                                                    : `Bookmark ${resource.title}`
+                                            }
+                                        >
+                                            {bookmarks.includes(resource.id) ? '\u2605' : '\u2606'}
+                                        </Button>
+                                    </div>
+                                    <Card.Title className="fs-6">
+                                        <a
+                                            href={resource.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {resource.title}
+                                        </a>
+                                    </Card.Title>
+                                    <Card.Subtitle
+                                        className="mb-2 text-muted"
+                                        style={{ fontSize: '0.85rem' }}
+                                    >
+                                        {resource.author}
+                                    </Card.Subtitle>
+                                    <Card.Text style={{ fontSize: '0.9rem' }}>
+                                        {resource.description}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    ))}
+                </Row>
+            )}
         </Container>
     );
 }

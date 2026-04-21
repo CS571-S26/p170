@@ -20,11 +20,11 @@ function Navbar() {
                         <Nav.Link as={Link} to="/events" active={location.pathname === '/events'}>
                             Events
                         </Nav.Link>
-                        <Nav.Link as={Link} to="/mission" active={location.pathname === '/mission'}>
-                            Mission
-                        </Nav.Link>
                         <Nav.Link as={Link} to="/resources" active={location.pathname === '/resources'}>
                             Resources
+                        </Nav.Link>
+                        <Nav.Link as={Link} to="/mission" active={location.pathname === '/mission'}>
+                            Mission
                         </Nav.Link>
                     </Nav>
                 </BsNavbar.Collapse>

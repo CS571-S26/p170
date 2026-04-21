@@ -1,4 +1,5 @@
 import { Container, Row, Col, Card } from 'react-bootstrap';
+import ContactForm from '../common/ContactForm';
 
 const values = [
     {
@@ -42,7 +43,7 @@ function MissionPage() {
                 </p>
             </section>
 
-            <section>
+            <section className="mb-5">
                 <h2 className="mb-4">Our Values</h2>
                 <Row xs={1} md={2} className="g-4">
                     {values.map((value) => (
@@ -56,6 +57,19 @@ function MissionPage() {
                         </Col>
                     ))}
                 </Row>
+            </section>
+
+            <section>
+                <h2 className="mb-3">Get in Touch</h2>
+                <p className="mb-4">
+                    Interested in joining, collaborating, or just learning more? Drop us
+                    a line and a member of the team will follow up.
+                </p>
+                <Card>
+                    <Card.Body>
+                        <ContactForm />
+                    </Card.Body>
+                </Card>
             </section>
         </Container>
     );

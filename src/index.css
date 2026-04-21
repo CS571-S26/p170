@@ -1,55 +1,31 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --uw-red: #c5050c;
+  --uw-red-dark: #9b0000;
+  --uw-red-light: #e04e54;
+  --uw-gray-dark: #282728;
+  --uw-gray: #646569;
+  --uw-cream: #f7f5f0;
+  --uw-off-white: #fcfbf7;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --bs-primary: var(--uw-red);
+  --bs-primary-rgb: 197, 5, 12;
+  --bs-link-color: var(--uw-red);
+  --bs-link-color-rgb: 197, 5, 12;
+  --bs-link-hover-color: var(--uw-red-dark);
+  --bs-link-hover-color-rgb: 155, 0, 0;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  color-scheme: light;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+  text-rendering: optimizeLegibility;
 }
 
 body {
   margin: 0;
+  background: var(--uw-cream);
+  color: var(--uw-gray-dark);
 }
 
 #root {
@@ -58,26 +34,275 @@ body {
   flex-direction: column;
 }
 
+main,
+.container {
+  background: transparent;
+}
+
+/* --- Typography --- */
+
 h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--uw-gray-dark);
+}
+
+h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
 h2 {
-  font-family: var(--heading);
-  font-weight: 500;
+  font-size: 1.625rem;
 }
+
 p {
-  margin: 0;
+  margin: 0 0 1rem 0;
+  line-height: 1.6;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+p:last-child {
+  margin-bottom: 0;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.lead {
+  color: var(--uw-gray);
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+a {
+  color: var(--uw-red);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--uw-red-dark);
+  text-decoration: underline;
+}
+
+/* --- Hero --- */
+
+.hero {
+  background: linear-gradient(
+    135deg,
+    var(--uw-red) 0%,
+    var(--uw-red-dark) 100%
+  );
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 4px solid var(--uw-gray-dark);
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(
+      circle at 15% 25%,
+      rgba(255, 255, 255, 0.12) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 85% 75%,
+      rgba(255, 255, 255, 0.08) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+}
+
+.hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1,
+.hero .lead {
+  color: #fff;
+}
+
+.hero .lead {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero .btn-light {
+  color: var(--uw-red-dark);
+  border-color: transparent;
+}
+
+.hero .btn-light:hover {
+  background-color: var(--uw-off-white);
+  color: var(--uw-red-dark);
+}
+
+/* --- Navbar --- */
+
+.navbar.bg-dark,
+nav.bg-dark {
+  background: var(--uw-gray-dark) !important;
+  border-bottom: 3px solid var(--uw-red);
+  padding-top: 0.65rem;
+  padding-bottom: 0.65rem;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.navbar-dark .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.navbar-dark .nav-link:hover {
+  color: #fff;
+}
+
+.navbar-dark .nav-link.active {
+  color: #fff !important;
+  border-bottom-color: var(--uw-red);
+}
+
+/* --- Cards --- */
+
+.card {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  font-weight: 700;
+  color: var(--uw-gray-dark);
+}
+
+/* --- Buttons --- */
+
+.btn {
+  font-weight: 500;
+  border-radius: 6px;
+}
+
+.btn-danger {
+  background-color: var(--uw-red);
+  border-color: var(--uw-red);
+}
+
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-color: var(--uw-red-dark) !important;
+  border-color: var(--uw-red-dark) !important;
+}
+
+.btn-outline-danger {
+  color: var(--uw-red);
+  border-color: var(--uw-red);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus,
+.btn-outline-danger:active {
+  background-color: var(--uw-red) !important;
+  border-color: var(--uw-red) !important;
+  color: #fff !important;
+}
+
+/* --- Footer --- */
+
+footer.bg-dark {
+  background: var(--uw-gray-dark) !important;
+  border-top: 3px solid var(--uw-red);
+}
+
+/* --- Table --- */
+
+.table {
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.table > :not(caption) > * > * {
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+.table thead th {
+  background: var(--uw-gray-dark);
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.table-active > * {
+  --bs-table-bg-state: rgba(197, 5, 12, 0.08) !important;
+}
+
+/* --- Forms --- */
+
+.form-control,
+.form-select {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--uw-red-light);
+  box-shadow: 0 0 0 0.2rem rgba(197, 5, 12, 0.15);
+}
+
+/* --- Project card specifics --- */
+
+.project-tag {
+  cursor: pointer;
+  transition:
+    background-color 0.15s ease,
+    transform 0.1s ease;
+}
+
+.project-tag:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+/* --- Resource star button --- */
+
+.star-button {
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--uw-red) !important;
+}
+
+.star-button:hover {
+  color: var(--uw-red-dark) !important;
+  transform: scale(1.15);
+}
+
+/* --- Badges --- */
+
+.badge {
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 0.4em 0.65em;
 }
