@@ -1,7 +1,15 @@
 import { useState } from 'react';
 import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
 
+const CONTACT_EMAIL = 'wnc-neuroai@wisc.edu';
 const emptyForm = { name: '', email: '', interest: 'projects', message: '' };
+
+const interestLabel = {
+    projects: 'Hands-on projects',
+    research: 'Research pathways',
+    hardware: 'Neuromorphic hardware',
+    general: 'General curiosity',
+};
 
 function ContactForm() {
     const [validated, setValidated] = useState(false);
@@ -17,7 +25,19 @@ function ContactForm() {
             setValidated(true);
             return;
         }
-        setSubmittedName(form.name.trim());
+        const name = form.name.trim();
+        const email = form.email.trim();
+        const message = form.message.trim();
+        const subject = `WNC Lab contact from ${name}`;
+        const body =
+            `Name: ${name}\n` +
+            `Email: ${email}\n` +
+            `Interest: ${interestLabel[form.interest]}\n\n` +
+            message;
+        window.location.href =
+            `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}` +
+            `&body=${encodeURIComponent(body)}`;
+        setSubmittedName(name);
         setForm(emptyForm);
         setValidated(false);
     }
@@ -28,9 +48,10 @@ function ContactForm() {
 
     if (submittedName) {
         return (
-            <Alert variant="success" className="d-flex align-items-center justify-content-between">
+            <Alert variant="success" className="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <span>
-                    Thanks, <strong>{submittedName}</strong> — we'll be in touch soon.
+                    Thanks, <strong>{submittedName}</strong> — your email client should
+                    be open with the draft. Send it when you're ready and we'll follow up.
                 </span>
                 <Button variant="outline-success" size="sm" onClick={() => setSubmittedName(null)}>
                     Send another

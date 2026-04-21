@@ -34,7 +34,11 @@ body {
   flex-direction: column;
 }
 
-main,
+main {
+  flex: 1;
+  background: transparent;
+}
+
 .container {
   background: transparent;
 }
