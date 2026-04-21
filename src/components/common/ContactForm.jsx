@@ -18,7 +18,7 @@ function ContactForm() {
 
     const messageTooShort = form.message.trim().length < 10;
 
-    const emailMissingWisc = !form.email.toLowerCase().includes('wisc');
+    const emailMissingWisc = !form.email.toLowerCase().includes('wisc.edu');
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -92,7 +92,7 @@ function ContactForm() {
                             placeholder="you@wisc.edu"
                         />
                         <Form.Control.Feedback type="invalid">
-                            Please enter a valid email address containing "wisc".
+                            Please enter a valid UW-Madison email address.
                         </Form.Control.Feedback>
                     </Form.Group>
                 </Col>
