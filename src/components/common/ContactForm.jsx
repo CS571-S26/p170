@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Form, Button, Alert, Row, Col } from 'react-bootstrap';
+import { Form, Button, Alert, Row, Col, Spinner } from 'react-bootstrap';
 
-const CONTACT_EMAIL = 'amahoney6@wisc.edu';
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xbdqngwj';
 const emptyForm = { name: '', email: '', interest: 'projects', message: '' };
 
 const interestLabel = {
@@ -15,14 +15,17 @@ function ContactForm() {
     const [validated, setValidated] = useState(false);
     const [form, setForm] = useState(emptyForm);
     const [submittedName, setSubmittedName] = useState(null);
+    const [submitting, setSubmitting] = useState(false);
+    const [error, setError] = useState(null);
 
+    const nameEmpty = form.name.trim().length === 0;
     const messageTooShort = form.message.trim().length < 10;
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault();
 
         const nativeValid = e.currentTarget.checkValidity();
-        if (!nativeValid || messageTooShort) {
+        if (!nativeValid || nameEmpty || messageTooShort) {
             setValidated(true);
             return;
         }
@@ -30,19 +33,41 @@ function ContactForm() {
         const name = form.name.trim();
         const email = form.email.trim();
         const message = form.message.trim();
-        const subject = `WNC Lab contact from ${name}`;
-        const body =
-            `Name: ${name}\n` +
-            `Email: ${email}\n` +
-            `Interest: ${interestLabel[form.interest]}\n\n` +
-            message;
-        window.location.href =
-            `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}` +
-            `&body=${encodeURIComponent(body)}`;
-        
-        setSubmittedName(name);
-        setForm(emptyForm);
-        setValidated(false);
+        const interest = interestLabel[form.interest];
+
+        setSubmitting(true);
+        setError(null);
+
+        try {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    email,
+                    interest,
+                    message,
+                    _subject: `WNC Lab contact from ${name}`,
+                }),
+            });
+
+            if (!res.ok) {
+                const data = await res.json().catch(() => null);
+                const detail = data?.errors?.map((er) => er.message).join(', ');
+                throw new Error(detail || `Submission failed (${res.status})`);
+            }
+
+            setSubmittedName(name);
+            setForm(emptyForm);
+            setValidated(false);
+        } catch (err) {
+            setError(err.message || 'Something went wrong. Please try again.');
+        } finally {
+            setSubmitting(false);
+        }
     }
 
     function update(field) {
@@ -53,8 +78,8 @@ function ContactForm() {
         return (
             <Alert variant="success" className="d-flex align-items-center justify-content-between flex-wrap gap-2">
                 <span>
-                    Thanks, <strong>{submittedName}</strong> — your email client should
-                    be open with the draft. Send it when you're ready and we'll follow up.
+                    Thanks, <strong>{submittedName}</strong> — your message has been
+                    sent. A member of the team will follow up by email.
                 </span>
                 <Button variant="outline-success" size="sm" onClick={() => setSubmittedName(null)}>
                     Send another
@@ -65,6 +90,11 @@ function ContactForm() {
 
     return (
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+            {error && (
+                <Alert variant="danger" onClose={() => setError(null)} dismissible>
+                    {error}
+                </Alert>
+            )}
             <Row className="g-3">
                 <Col md={6}>
                     <Form.Group controlId="contactName">
@@ -74,6 +104,7 @@ function ContactForm() {
                             type="text"
                             value={form.name}
                             onChange={update('name')}
+                            isInvalid={validated && nameEmpty}
                             placeholder="Jane Badger"
                         />
                         <Form.Control.Feedback type="invalid">
@@ -125,8 +156,27 @@ function ContactForm() {
                 </Form.Control.Feedback>
             </Form.Group>
 
-            <Button type="submit" variant="danger" className="mt-3">
-                Send message
+            <Button
+                type="submit"
+                variant="danger"
+                className="mt-3"
+                disabled={submitting}
+            >
+                {submitting ? (
+                    <>
+                        <Spinner
+                            as="span"
+                            animation="border"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                            className="me-2"
+                        />
+                        Sending...
+                    </>
+                ) : (
+                    'Send message'
+                )}
             </Button>
         </Form>
     );
