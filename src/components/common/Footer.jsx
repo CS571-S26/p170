@@ -7,7 +7,7 @@ function Footer() {
                 <p className="mb-1">
                     Wisconsin Neuromorphic Computing &amp; NeuroAI Lab
                 </p>
-                <p className="mb-0 text-secondary">
+                <p className="mb-0 footer-subtle">
                     A WIN Organization &middot; CS Department, University of Wisconsin&ndash;Madison
                 </p>
             </Container>

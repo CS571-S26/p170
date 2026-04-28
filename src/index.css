@@ -236,6 +236,10 @@ footer.bg-dark {
   border-top: 3px solid var(--uw-red);
 }
 
+footer .footer-subtle {
+  color: rgba(255, 255, 255, 0.78);
+}
+
 /* --- Table --- */
 
 .table {
