@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" preserveAspectRatio="xMidYMid slice" role="img">
+  <defs>
+    <linearGradient id="bgArch" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#282728"/>
+      <stop offset="100%" stop-color="#1a191a"/>
+    </linearGradient>
+    <radialGradient id="glowArch" cx="0.7" cy="0.4" r="0.6">
+      <stop offset="0%" stop-color="#c5050c" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#c5050c" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="gridArch" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="600" fill="url(#bgArch)"/>
+  <rect width="1600" height="600" fill="url(#gridArch)"/>
+  <rect width="1600" height="600" fill="url(#glowArch)"/>
+
+  <!-- Left side: stylized brain outline -->
+  <g transform="translate(280,300)" fill="none" stroke="#e04e54" stroke-width="3" opacity="0.95">
+    <path d="M -180 -80 C -220 -120, -180 -180, -120 -170 C -110 -200, -50 -210, -20 -180 C 30 -210, 90 -190, 100 -150 C 150 -150, 170 -100, 140 -60 C 170 -20, 150 40, 100 50 C 90 90, 30 110, -10 90 C -50 120, -120 110, -130 70 C -190 70, -210 20, -180 -20 C -210 -50, -210 -70, -180 -80 Z"/>
+    <!-- Inner "neural" lines -->
+    <path d="M -120 -100 Q -60 -60, 0 -90 T 100 -50" stroke="#e04e54" stroke-width="2" opacity="0.7"/>
+    <path d="M -100 0 Q -30 -20, 30 10 T 110 -10" stroke="#e04e54" stroke-width="2" opacity="0.7"/>
+    <path d="M -130 50 Q -50 30, 20 60 T 90 30" stroke="#e04e54" stroke-width="2" opacity="0.7"/>
+  </g>
+  <!-- Brain "neurons" (small filled circles) -->
+  <g fill="#c5050c">
+    <circle cx="160" cy="220" r="4"/>
+    <circle cx="220" cy="180" r="5"/>
+    <circle cx="280" cy="240" r="4"/>
+    <circle cx="340" cy="200" r="5"/>
+    <circle cx="180" cy="320" r="4"/>
+    <circle cx="260" cy="360" r="5"/>
+    <circle cx="340" cy="340" r="4"/>
+    <circle cx="200" cy="400" r="5"/>
+    <circle cx="300" cy="420" r="4"/>
+  </g>
+
+  <!-- Connecting filaments crossing center -->
+  <g fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.5">
+    <path d="M 360 220 Q 600 200, 760 240"/>
+    <path d="M 380 280 Q 620 280, 800 300"/>
+    <path d="M 380 340 Q 640 360, 800 360"/>
+    <path d="M 360 400 Q 600 420, 780 420"/>
+  </g>
+
+  <!-- Right side: circuit pattern -->
+  <g stroke="#e04e54" stroke-width="2" fill="none" opacity="0.9">
+    <!-- chip outline -->
+    <rect x="900" y="180" width="440" height="280" rx="10" stroke="#c5050c" stroke-width="3"/>
+    <!-- inner core -->
+    <rect x="1000" y="240" width="240" height="160" rx="6" stroke="#e04e54"/>
+    <!-- chip pins -->
+    <g stroke="#e04e54" stroke-width="3">
+      <line x1="900" y1="220" x2="860" y2="220"/>
+      <line x1="900" y1="260" x2="860" y2="260"/>
+      <line x1="900" y1="300" x2="860" y2="300"/>
+      <line x1="900" y1="340" x2="860" y2="340"/>
+      <line x1="900" y1="380" x2="860" y2="380"/>
+      <line x1="900" y1="420" x2="860" y2="420"/>
+      <line x1="1340" y1="220" x2="1380" y2="220"/>
+      <line x1="1340" y1="260" x2="1380" y2="260"/>
+      <line x1="1340" y1="300" x2="1380" y2="300"/>
+      <line x1="1340" y1="340" x2="1380" y2="340"/>
+      <line x1="1340" y1="380" x2="1380" y2="380"/>
+      <line x1="1340" y1="420" x2="1380" y2="420"/>
+    </g>
+    <!-- traces inside core -->
+    <g stroke="rgba(224,78,84,0.6)" stroke-width="1.5">
+      <path d="M 1020 270 H 1100 V 310 H 1180 V 350"/>
+      <path d="M 1040 380 H 1140 V 320"/>
+      <path d="M 1220 260 V 320 H 1180"/>
+      <path d="M 1060 350 V 390"/>
+    </g>
+    <!-- chip nodes -->
+    <g fill="#c5050c" stroke="none">
+      <circle cx="1100" cy="270" r="4"/>
+      <circle cx="1180" cy="310" r="4"/>
+      <circle cx="1180" cy="350" r="4"/>
+      <circle cx="1140" cy="380" r="4"/>
+      <circle cx="1220" cy="320" r="4"/>
+      <circle cx="1060" cy="390" r="4"/>
+    </g>
+  </g>
+
+  <!-- "Synapse" label spots -->
+  <g fill="rgba(255,255,255,0.75)" font-family="-apple-system, Segoe UI, sans-serif" font-size="14" letter-spacing="3">
+    <text x="80" y="80">BIOLOGY</text>
+    <text x="1240" y="80">SILICON</text>
+  </g>
+</svg>
