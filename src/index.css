@@ -314,3 +314,66 @@ footer .footer-subtle {
   letter-spacing: 0.02em;
   padding: 0.4em 0.65em;
 }
+
+/* --- Home carousel --- */
+
+.home-carousel {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: var(--uw-gray-dark);
+}
+
+.home-carousel-img {
+  width: 100%;
+  aspect-ratio: 8 / 3;
+  max-height: 460px;
+  object-fit: cover;
+  display: block;
+}
+
+.home-carousel-caption {
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.65) 0%,
+    rgba(0, 0, 0, 0.25) 70%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem 3rem;
+  text-align: left;
+}
+
+.home-carousel-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.home-carousel-caption p {
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 640px;
+}
+
+/* --- Project card image --- */
+
+.project-card-img {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* --- Mission illustration --- */
+
+.mission-illustration {
+  width: 100%;
+  max-width: 460px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}

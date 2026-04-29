@@ -1,6 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Container, Row, Col, ButtonGroup, Button, Form } from 'react-bootstrap';
 import ProjectCard from '../common/ProjectCard';
+import imgNeuronSim from '../../assets/project-neuron-sim.svg';
+import imgDreamAi from '../../assets/project-dream-ai.svg';
+import imgSnnEdge from '../../assets/project-snn-edge.svg';
+import imgMemristive from '../../assets/project-memristive.svg';
 
 const projects = [
     {
@@ -11,6 +15,9 @@ const projects = [
         details:
             'Using Brian2 and NumPy, members implement single-neuron and small-network dynamics, plot membrane voltage traces, and explore how parameter choices affect firing patterns. The project doubles as an onramp for members new to computational neuroscience.',
         tags: ['Python', 'Neuroscience', 'Simulation'],
+        image: imgNeuronSim,
+        imageAlt:
+            'Plot of a neuron membrane voltage trace showing two action potentials rising sharply above the firing threshold, in UW red on a cream background.',
     },
     {
         id: 'dream-ai',
@@ -20,6 +27,9 @@ const projects = [
         details:
             'We train small generative models, then periodically pause training to run "dream" passes that recombine latent features. Members measure whether these offline phases improve downstream generalization on classification benchmarks.',
         tags: ['Generative Models', 'Deep Learning', 'Creativity'],
+        image: imgDreamAi,
+        imageAlt:
+            'Dreamlike scene with a glowing orb above wavy luminous trails over a dark purple-to-red gradient, evoking offline replay in a generative model.',
     },
     {
         id: 'snn-edge',
@@ -29,6 +39,9 @@ const projects = [
         details:
             'Using snnTorch and Norse, the team benchmarks spiking models against conventional ANNs on keyword spotting and gesture recognition, with a focus on latency and inference energy.',
         tags: ['SNN', 'Hardware', 'Edge Computing'],
+        image: imgSnnEdge,
+        imageAlt:
+            'Schematic of a chip with red traces and labeled pins, with an incoming spike train above and arrows indicating spike inputs and outputs.',
     },
     {
         id: 'memristive-learning',
@@ -38,6 +51,9 @@ const projects = [
         details:
             'Members simulate crossbar devices with realistic nonidealities, then evaluate STDP variants for robustness. The long-term goal is a design that tolerates device variability while still learning meaningful representations.',
         tags: ['STDP', 'Memristors', 'Hardware'],
+        image: imgMemristive,
+        imageAlt:
+            'A 7-by-5 grid of horizontal and vertical wires forming a crossbar array, with red dots of varying intensity at each intersection representing memristive devices at different conductance levels.',
     },
 ];
 

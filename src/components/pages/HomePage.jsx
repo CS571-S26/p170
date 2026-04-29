@@ -1,6 +1,9 @@
-import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Button, Carousel } from 'react-bootstrap';
 import { Link } from 'react-router';
 import Hero from '../common/Hero';
+import slideArchitecture from '../../assets/slide-architecture.svg';
+import slideSpiking from '../../assets/slide-spiking.svg';
+import slideCollaboration from '../../assets/slide-collaboration.svg';
 
 const highlights = [
     {
@@ -17,17 +20,66 @@ const highlights = [
     },
 ];
 
+const slides = [
+    {
+        src: slideArchitecture,
+        alt: 'Stylized illustration showing a red brain on the left connected by neural filaments to a circuit chip on the right, representing the bridge between biology and silicon.',
+        caption: 'Bridging Biology and Silicon',
+        description:
+            'We study non-von Neumann architectures inspired by the structure and dynamics of the brain.',
+    },
+    {
+        src: slideSpiking,
+        alt: 'Five horizontal traces showing repeating action potential spikes across multiple neural channels over time.',
+        caption: 'Spiking Neural Networks',
+        description:
+            'Members build and analyze networks that compute with discrete spikes, the language of biological neurons.',
+    },
+    {
+        src: slideCollaboration,
+        alt: 'Network graph of interconnected white nodes on a UW red background, with three larger highlighted nodes near the center.',
+        caption: 'A Community of Builders',
+        description:
+            'Students from CS, ECE, neuroscience, and beyond come together to learn, build, and publish.',
+    },
+];
+
 function HomePage() {
     return (
         <>
             <Hero
                 title="Wisconsin Neuromorphic Computing & NeuroAI Lab"
-                subtitle={'A student organization within the Wisconsin Innovation Network exploring non-von Neumann architectures and brain-inspired computing at UW\u2013Madison.'}
+                subtitle={'A student organization within the Wisconsin Innovation Network exploring non-von Neumann architectures and brain-inspired computing at UW–Madison.'}
                 primaryCta={{ to: '/mission', label: 'Our Mission' }}
                 secondaryCta={{ to: '/projects', label: 'View Projects' }}
             />
 
             <Container className="py-5 text-start">
+                <section className="mb-5">
+                    <Carousel
+                        fade
+                        interval={5500}
+                        className="home-carousel shadow-sm"
+                        role="region"
+                        aria-roledescription="carousel"
+                        aria-label="Highlights from the lab"
+                    >
+                        {slides.map((slide) => (
+                            <Carousel.Item key={slide.caption}>
+                                <img
+                                    src={slide.src}
+                                    alt={slide.alt}
+                                    className="d-block w-100 home-carousel-img"
+                                />
+                                <Carousel.Caption className="home-carousel-caption text-start">
+                                    <p className="home-carousel-title mb-2">{slide.caption}</p>
+                                    <p className="mb-0">{slide.description}</p>
+                                </Carousel.Caption>
+                            </Carousel.Item>
+                        ))}
+                    </Carousel>
+                </section>
+
                 <section className="mb-5">
                     <h2 className="mb-4">What We Do</h2>
                     <Row xs={1} md={3} className="g-4">

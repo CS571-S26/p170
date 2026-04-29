@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import ContactForm from '../common/ContactForm';
+import missionIllustration from '../../assets/mission-illustration.svg';
 
 const values = [
     {
@@ -56,17 +57,28 @@ function MissionPage() {
 
             <section className="mb-5">
                 <h2 className="mb-4">Our Values</h2>
-                <Row xs={1} md={2} className="g-4">
-                    {values.map((value) => (
-                        <Col key={value.title}>
-                            <Card className="h-100">
-                                <Card.Body>
-                                    <Card.Title>{value.title}</Card.Title>
-                                    <Card.Text>{value.text}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
+                <Row className="g-4 align-items-center">
+                    <Col lg={5}>
+                        <img
+                            src={missionIllustration}
+                            alt="Stylized red neuron with branching dendrites reaching toward labels for Curiosity, Research, Access, and Impact in the four corners, each connected by dotted lines."
+                            className="img-fluid mission-illustration"
+                        />
+                    </Col>
+                    <Col lg={7}>
+                        <Row xs={1} md={2} className="g-4">
+                            {values.map((value) => (
+                                <Col key={value.title}>
+                                    <Card className="h-100">
+                                        <Card.Body>
+                                            <Card.Title>{value.title}</Card.Title>
+                                            <Card.Text>{value.text}</Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </Col>
+                            ))}
+                        </Row>
+                    </Col>
                 </Row>
             </section>
 

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid slice" role="img">
+  <defs>
+    <linearGradient id="bgDream" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a1530"/>
+      <stop offset="50%" stop-color="#3b1a3a"/>
+      <stop offset="100%" stop-color="#9b0000"/>
+    </linearGradient>
+    <radialGradient id="moon" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="rgba(252,251,247,0.95)"/>
+      <stop offset="60%" stop-color="rgba(252,251,247,0.4)"/>
+      <stop offset="100%" stop-color="rgba(252,251,247,0)"/>
+    </radialGradient>
+    <filter id="dreamBlur" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="6"/>
+    </filter>
+  </defs>
+  <rect width="800" height="400" fill="url(#bgDream)"/>
+
+  <!-- Soft glowing orb -->
+  <circle cx="600" cy="160" r="120" fill="url(#moon)"/>
+
+  <!-- Wavy "dream" trails -->
+  <g fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" filter="url(#dreamBlur)">
+    <path d="M 0 280 Q 200 230, 400 290 T 800 270"/>
+    <path d="M 0 320 Q 220 270, 420 330 T 800 310"/>
+    <path d="M 0 360 Q 240 310, 440 370 T 800 350"/>
+  </g>
+  <g fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="1.5">
+    <path d="M 0 280 Q 200 230, 400 290 T 800 270"/>
+    <path d="M 0 320 Q 220 270, 420 330 T 800 310"/>
+    <path d="M 0 360 Q 240 310, 440 370 T 800 350"/>
+  </g>
+
+  <!-- Floating "latent" particles -->
+  <g fill="rgba(255,255,255,0.85)">
+    <circle cx="120" cy="100" r="2"/>
+    <circle cx="200" cy="60" r="3"/>
+    <circle cx="80" cy="180" r="2"/>
+    <circle cx="280" cy="140" r="2.5"/>
+    <circle cx="360" cy="80" r="2"/>
+    <circle cx="450" cy="180" r="2"/>
+    <circle cx="180" cy="220" r="2.5"/>
+    <circle cx="320" cy="240" r="2"/>
+    <circle cx="500" cy="100" r="3"/>
+    <circle cx="720" cy="60" r="2"/>
+    <circle cx="760" cy="120" r="2"/>
+    <circle cx="40" cy="60" r="2"/>
+  </g>
+
+  <!-- Title -->
+  <text x="60" y="60" fill="rgba(255,255,255,0.92)" font-family="-apple-system, Segoe UI, sans-serif" font-size="18" font-weight="600" letter-spacing="2">Latent Recombination</text>
+</svg>

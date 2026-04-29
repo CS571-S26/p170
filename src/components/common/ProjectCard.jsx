@@ -6,6 +6,14 @@ function ProjectCard({ project, bookmarked, onToggleBookmark, onTagClick, active
 
     return (
         <Card className="h-100 project-card">
+            {project.image && (
+                <Card.Img
+                    variant="top"
+                    src={project.image}
+                    alt={project.imageAlt}
+                    className="project-card-img"
+                />
+            )}
             <Card.Body className="d-flex flex-column">
                 <Card.Title>{project.title}</Card.Title>
                 <Card.Text>{project.description}</Card.Text>
@@ -40,7 +48,7 @@ function ProjectCard({ project, bookmarked, onToggleBookmark, onTagClick, active
                         size="sm"
                         onClick={() => onToggleBookmark(project.id)}
                     >
-                        {bookmarked ? '\u2605 Bookmarked' : '\u2606 Bookmark'}
+                        {bookmarked ? '★ Bookmarked' : '☆ Bookmark'}
                     </Button>
                 </div>
             </Card.Body>
